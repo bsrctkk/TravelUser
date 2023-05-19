@@ -79,19 +79,19 @@ namespace TravelUser.Controllers
             {
                 return BadRequest("Not A valid data");
             }
-            var existingContact = context.Contacts.Where(p => p.Id == id).FirstOrDefault<Contact>();
-            if (existingContact != null)
+            var result = context.Contacts.Where(p => p.Id == id).FirstOrDefault<Contact>();
+            if (result != null)
             {
-                existingContact.Title = Contact.Title;
-                existingContact.Message = Contact.Message;
-                existingContact.WebUserId = Contact.WebUserId;
+                result.Title = Contact.Title;
+                result.Message = Contact.Message;
+                result.WebUserId = Contact.WebUserId;
                 context.SaveChanges();
             }
             else
             {
                 return NotFound();
             }
-            List<GetAllContactResponseDTO> response = context.Contacts.Include("WebUser").Select(c => new GetAllContactResponseDTO
+            List<GetAllContactResponseDTO> response = context.Contacts.Include(c => c.WebUser).Select(c => new GetAllContactResponseDTO
             {
                 Id = c.Id,
                 Title = c.Title,
