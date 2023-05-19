@@ -42,7 +42,7 @@ namespace TravelUser.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            Contact contact = context.Contacts.Include("WebUser").FirstOrDefault(c => c.Id == id);
+            Contact contact = context.Contacts.Include(c => c.WebUser).FirstOrDefault(c => c.Id == id);
             if (contact == null)
             {
                 return NotFound(id + " User with id not found");
